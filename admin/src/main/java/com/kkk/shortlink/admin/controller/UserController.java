@@ -1,0 +1,36 @@
+package com.kkk.shortlink.admin.controller;
+
+import com.kkk.shortlink.admin.common.convention.result.Result;
+import com.kkk.shortlink.admin.common.convention.result.Results;
+import com.kkk.shortlink.admin.dto.resp.UserRespDTO;
+import com.kkk.shortlink.admin.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 用户管理控制层
+ */
+@RestController
+@RequiredArgsConstructor
+public class UserController {
+
+
+    private final UserService userService;
+
+    /**
+     * 根据用户名查询用户信息
+     */
+    @GetMapping("/api/shortlink/v1/user/{username}")
+    public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
+//        UserRespDTO result = userService.getUserByUserName(username);
+//        if (result == null) {
+//            return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_NULL.code()).setMessage(UserErrorCodeEnum.USER_NULL.message());
+//        } else {
+//            return Results.success(result);
+//            //return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_EXIST.code()).setMessage(UserErrorCodeEnum.USER_EXIST.message()).setData(result);
+//        }
+        return Results.success(userService.getUserByUserName(username));
+    }
+}
