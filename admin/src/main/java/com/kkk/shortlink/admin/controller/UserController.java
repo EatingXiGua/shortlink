@@ -1,7 +1,9 @@
 package com.kkk.shortlink.admin.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.kkk.shortlink.admin.common.convention.result.Result;
 import com.kkk.shortlink.admin.common.convention.result.Results;
+import com.kkk.shortlink.admin.dto.resp.UserActualRespDTO;
 import com.kkk.shortlink.admin.dto.resp.UserRespDTO;
 import com.kkk.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +34,13 @@ public class UserController {
 //            //return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_EXIST.code()).setMessage(UserErrorCodeEnum.USER_EXIST.message()).setData(result);
 //        }
         return Results.success(userService.getUserByUserName(username));
+    }
+
+    /**
+     * 根据用户名查询用户无脱敏信息
+     */
+    @GetMapping("/api/shortlink/v1/actual/user/{username}")
+    public Result<UserActualRespDTO> getActualUserByUsername(@PathVariable("username") String username) {
+        return Results.success(BeanUtil.copyProperties(userService.getUserByUserName(username), UserActualRespDTO.class));
     }
 }
