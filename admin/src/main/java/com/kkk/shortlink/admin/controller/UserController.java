@@ -90,4 +90,12 @@ public class UserController {
         return Results.success(result);
     }
 
+    /**
+     * 用户退出功能
+     */
+    @DeleteMapping("/api/short-link/v1/user/exit-login")
+    public Result<Void> exitLogin(@RequestParam("username") String username,@RequestParam("token") String token){
+        userService.exitLogin(username,token);
+        return Results.success();
+    }
 }
