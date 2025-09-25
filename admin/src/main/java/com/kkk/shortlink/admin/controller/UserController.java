@@ -3,9 +3,11 @@ package com.kkk.shortlink.admin.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.kkk.shortlink.admin.common.convention.result.Result;
 import com.kkk.shortlink.admin.common.convention.result.Results;
+import com.kkk.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.kkk.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.kkk.shortlink.admin.dto.req.UserUpdateReqDTO;
 import com.kkk.shortlink.admin.dto.resp.UserActualRespDTO;
+import com.kkk.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.kkk.shortlink.admin.dto.resp.UserRespDTO;
 import com.kkk.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -61,10 +63,31 @@ public class UserController {
         return Results.success();
     }
 
+    /**
+     * 修改用户
+     */
     @PutMapping("/api/short-link/v1/user")
     public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam){
         userService.update(requestParam);
         return Results.success();
+    }
+
+    /**
+     * 用户登录
+     */
+    @PostMapping("/api/short-link/v1/user/login")
+    public Result<UserLoginRespDTO> login(@RequestBody UserLoginReqDTO requestParam){
+        //UserLoginRespDTO respDTO = userService.login(requestParam);
+        return Results.success(userService.login(requestParam));
+    }
+
+    /**
+     * 检查用户是否登录
+     */
+    @GetMapping("/api/short-link/v1/user/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("username") String username,@RequestParam("token") String token){
+        Boolean result = userService.checkLogin(username,token);
+        return Results.success(result);
     }
 
 }
