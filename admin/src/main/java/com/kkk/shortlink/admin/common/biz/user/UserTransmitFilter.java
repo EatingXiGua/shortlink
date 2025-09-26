@@ -20,6 +20,10 @@ public class UserTransmitFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String requestURI = httpServletRequest.getRequestURI();
+        if (requestURI.equals("/api/short-link/v1/user/login")){//先把登录忽略了
+            return;
+        }
         String username = httpServletRequest.getHeader("username");
         String token = httpServletRequest.getHeader("token");
         Object userInfoJsonStr = stringRedisTemplate.opsForHash().get("login_" + username, token);
